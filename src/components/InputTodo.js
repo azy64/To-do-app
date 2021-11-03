@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { IoIosAddCircle } from 'react-icons/io';
+import PropTypes from 'prop-types';
+import '../css/inputTodo.css';
 
 export default class InputTodo extends Component {
   constructor(props) {
@@ -9,15 +11,33 @@ export default class InputTodo extends Component {
     };
   }
 
+  createTask = (e) => {
+    // console.log(e.code);
+    if (e.code === 'Enter') {
+      const { value } = e.target;
+      if (value) {
+        const { handlerCreation } = this.props;
+        handlerCreation(value);
+      }
+      e.target.value = '';
+    }
+  }
+
   render() {
     return (
       <div id="inputTodo">
-        <div>
-          <input type="text" placeholder="Add todo" aria-labelledby="inputTodo" />
-          <IoIosAddCircle />
+        <div className="inputTodo">
+          <input type="text" placeholder="Add todo..." aria-labelledby="inputTodo" onKeyDown={this.createTask} />
+          <button type="button" className="add">
+            <IoIosAddCircle className="icon" size="30px" color="darkblue" />
+          </button>
         </div>
 
       </div>
     );
   }
 }
+
+InputTodo.propTypes = {
+  handlerCreation: PropTypes.func.isRequired,
+};

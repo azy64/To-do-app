@@ -1,0 +1,22 @@
+.task {
+  border: 1px solid green;
+  display: grid;
+  grid-template-columns: 10% 78% 10%;
+  margin: 10px;
+  padding: 5px;
+  line-height: 18px;
+}
+
+.edit {
+  resize: none !important;
+  border: none !important;
+  outline: none !important;
+  width: 100%;
+  line-height: 19px;
+  font-size: 15px;
+  padding-top: 15px;
+}
+
+.complete {
+  text-decoration: line-through;
+}
