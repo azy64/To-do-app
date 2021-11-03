@@ -16,3 +16,7 @@
     font-size: 15px;
     padding-top: 15px;
 }
+
+.complete {
+    text-decoration: line-through;
+}

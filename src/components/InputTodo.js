@@ -17,7 +17,6 @@ export default class InputTodo extends Component {
       const { value } = e.target;
       if (value) {
         const { handlerCreation } = this.props;
-        console.log('value', value);
         handlerCreation(value);
       }
       e.target.value = '';

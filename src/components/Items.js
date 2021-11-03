@@ -13,40 +13,68 @@ export default class Items extends Component {
   }
 
   remove = (e) => {
-    console.log('je suis dans le remove', e.target.parentNode.parentNode.parentNode.id);
     const id = parseInt(e.target.parentNode.parentNode.parentNode.id, 10);
     const { handlerRemove } = this.props;
     handlerRemove(id);
   }
 
   isChecked = (e) => {
-    console.log(e.target.checked);
     const { checked } = e.target;
     const id = parseInt(e.target.parentNode.id, 10);
-    // const { value } = e.target.nextSibling;
+    const text = e.target.nextSibling;
+    text.classList.add('complete');
     const { title } = this.state;
     // const { value } =
     const { handlerEdit } = this.props;
     handlerEdit({ id, title, completed: checked });
   }
 
-  changeValue = (e) => {
-    this.setState({ title: e.target.value });
-    console.log(e.target.value);
+  focused = (e) => {
+    const { target } = e;
+    target.classList.remove('complete');
   }
 
-  putCheck = (value) => {
-    if (value) return <input type="checkbox" checked onChange={this.isChecked} />;
-    return <input type="checkbox" onChange={this.isChecked} />;
+  blur = (e) => {
+    const { target } = e;
+    target.classList.add('complete');
+  }
+
+  changeValue = (e) => {
+    this.setState({ title: e.target.value });
+    const id = parseInt(e.target.parentNode.id, 10);
+    const { checked } = e.target.previousSibling;
+    const { title } = this.state;
+    const { handlerEdit } = this.props;
+    handlerEdit({ id, title, completed: checked });
+  }
+
+  putCheck = (value, tmp) => {
+    if (value) {
+      return (
+        [<input type="checkbox" key={0} checked onChange={this.isChecked} />,
+          <textarea onFocus={this.focused} onBlur={this.blur} key={1} className="edit complete" onInput={this.edit} value={tmp} onChange={this.changeValue} />]
+      );
+    }
+    return [<input type="checkbox" key={0} onChange={this.isChecked} />,
+      <textarea className="edit" onFocus={this.focused} onBlur={this.blur} key={1} onInput={this.edit} value={tmp} onChange={this.changeValue} />,
+    ];
+  }
+
+  returnTitle = (value) => {
+    const { title } = this.state;
+    if (title) return title;
+    return value;
   }
 
   render() {
     const { id, title, completed } = this.props;
-    // e.target.valuethis.setState({ title });
+    const tmp = this.returnTitle(title);
+
+    // e.target.value
+    // this.setState({ title });
     return (
       <div id={id} className="task">
-        {this.putCheck(completed)}
-        <textarea className="edit" onInput={this.edit} value={this.title || title} onChange={this.changeValue} />
+        {this.putCheck(completed, tmp)}
         <button type="button" className="add" onClick={this.remove}>
           <FaTrash color="red" size="20px" />
         </button>
