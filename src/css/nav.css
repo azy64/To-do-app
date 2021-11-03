@@ -1,0 +1,19 @@
+.active {
+  color: green;
+}
+
+nav {
+  border-bottom: 1px solid gray;
+  margin-bottom: 5px;
+  box-shadow: 5px 1px 9px gray;
+}
+
+nav ul {
+  margin: 0;
+  list-style: none;
+}
+
+nav ul li {
+  display: inline-block;
+  margin: 10px;
+}
